@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Border Radius</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Sora;
+    }
+
+    .main_page {
+      width: 100%;
+      height: auto;
+      background: rgb(19, 19, 19);
+    }
+
+    h1 {
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+      letter-spacing: 2px;
+    }
+
+    .circle {
+      width: 300px;
+      height: 300px;
+      margin: auto;
+      background-image: linear-gradient(to right, rgb(65, 88, 208), rgb(255, 204, 112));
+      box-shadow: -60px 20px 0px rgba(255, 255, 255, 0.07);
+      margin-bottom: 20px;
+    }
+
+    .value_adj {
+      width: 30%;
+      margin: auto;
+      padding: 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .value_adj div {
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 20px;
+      flex-wrap: wrap;
+    }
+
+    .value_adj div input {
+      width: 60%;
+      cursor: pointer;
+    }
+
+    .value_adj div p {
+      font-size: 15px;
+      text-transform: capitalize;
+      font-weight: 500;
+      color: gray;
+    }
+
+    .copy_css {
+      width: 80%;
+      margin: auto;
+      text-align: center;
+    }
+
+    .copy_css button {
+      padding: 10px 50px;
+      margin-bottom: 30px;
+      font-size: 14px;
+      border-radius: 3px;
+      border: none;
+      color: #fff;
+      background-color: rgb(90, 90, 90);
+      background-image: linear-gradient(to left, rgb(14, 14, 14), rgb(14, 14, 14));
+      cursor: pointer;
+      background-size: 1px 100%;
+      background-repeat: no-repeat;
+      transition: all .3s ease-in;
+    }
+
+    .copy_css button:hover {
+      outline: 3px solid rgb(255, 183, 50);
+      outline-offset: 2px;
+      background-size: 100% 100%;
+    }
+
+    .alert_box {
+      width: 100%;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: rgba(22, 22, 22, 0.2);
+      position: absolute;
+      top: 0;
+      color: #fff;
+    }
+
+    .alert_box p {
+      background: rgb(14, 14, 14);
+      padding: 50px;
+      border-radius: 7px;
+    }
+
+    @media screen and (max-width:500px) {
+      .circle {
+        box-shadow: -20px 20px 0px rgba(255, 255, 255, 0);
+      }
+
+      .main_page {
+        height: 100vh;
+      }
+
+      .value_adj {
+        width: 80%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="main_page" x-data="{
+    top_bottom:80,
+    top_bottom_1(){return 100-this.top_bottom+'%'},
+    top_right:30,
+    top_right_1() {return 100-this.top_right+'% '},
+    bottom_left:65,
+    bottom_left_1() { return 100-this.bottom_left+'%'},
+    bottom_right:35,
+    bottom_right_1() {return 100-this.bottom_right+'%'},
+    border_radius(){
+      return 'border-radius:'+this.top_right+'% '+this.top_right_1()+ this.bottom_right+'% '+this.bottom_right_1() +'/'+this.top_bottom+'% '+this.bottom_left+'% '+this.bottom_left_1() + this.top_bottom_1() },
+      show:false
+  }">
+    <h1>Border Radius Generator</h1>
+    <div class="circle" :style="border_radius" x-ref="circle"></div>
+    <div class="value_adj">
+      <div>
+        <p>Top bottom</p><input type="range" min="0" max="100" value="100" x-model="top_bottom">
+      </div>
+      <div>
+        <p>Top right</p><input type="range" min="0" max="100" value="100" x-model="top_right">
+      </div>
+      <div>
+        <p>bottom left</p><input type="range" min="0" max="100" value="100" x-model="bottom_left">
+      </div>
+      <div>
+        <p>bottom right</p><input type="range" min="0" max="100" value="100" x-model="bottom_right">
+      </div>
+    </div>
+    <div class="copy_css">
+      <p x-show="false" x-text="border_radius" x-ref="par"></p>
+      <button x-on:click="navigator.clipboard.writeText(border_radius()),show='true'">Copy
+        css</button>
+    </div>
+    <div class="alert_box" x-show="show" @click="show=false">
+      <p>css has been copied!</p>
+    </div>
+  </div>
+
+  <script src="//unpkg.com/alpinejs" defer></script>
+</body>
+</html>
